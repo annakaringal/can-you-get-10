@@ -15,4 +15,24 @@ describe("Grid", function() {
     expect(grid).toBeNonEmpty(grid);
   });
 
+  it("should construct a new non empty grid with numbers between 1 and highestNumber", function() {
+    var highestNumber = Math.floor(Math.random()*10);
+    var newGrid = new Grid({highestNumber: highestNumber});
+
+    var actualHighest = 0;
+    var lessThanOne = false;
+    newGrid.eachCell(function(row, col){
+      var cell = newGrid.cell(row, col);
+      if (cell > actualHighest){
+        actualHighest = cell;
+      }
+      if (cell < 1){
+        lessThanOne = true;
+      }
+    });
+
+    expect(lessThanOne).toBeFalsy;
+    expect(actualHighest).toEqual(highestNumber);
+  });
+
 });
