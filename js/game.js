@@ -1,6 +1,6 @@
-function Game(options){
+function Game(opts){
+  var options = opts || {};
   this.size = options.size || 5;
-
   this.highestNumber = options.highestNumber || 4;
   this.goalNumber = 10;
 

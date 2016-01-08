@@ -1,4 +1,5 @@
-function Grid(options){
+function Grid(opts){
+  var options = opts || {};
   this.size = options.size || 5;
   this.cells = options.prevState ? this.fromState(options.prevState) : this.random(options.highestNumber);
 }
