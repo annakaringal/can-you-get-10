@@ -46,13 +46,22 @@ Game.prototype.directionVector = function(dir){
   return this.directions[dir];
 };
 
-Game.prototype.canMerge = function(row, col){
-  for (var dir=0; dir<4; dir++){
-    var vec = directionVector(dir);
-    var cell = this.grid.cell(row, col);
-    var adjacent = this.grid.cell(row + vec.x, col + vec.y);
+// Returns value in adjacent cell 
+Game.prototype.adjacentCell = function(row, col, dir){
+  var vec = directionVector(dir);
+  return {
+    x: row + vec.x, 
+    y: row + vec.y, 
+    content: this.grid.cell(row + vec.x, col + vec.y)
+  };
+};
 
-    if (cell === adjacent) return true;
+// Returns true if cell is mergeable, i.e. has adjacent cells with same value
+Game.prototype.canMerge = function(row, col){
+  var cell = this.grid.cell(row, col);
+  for (var dir=0; dir<4; dir++){
+    var adjacent = adjacentCell(row, col, dir);
+    if (cell === adjacent.content) return true;
   }
   return false;
 }
