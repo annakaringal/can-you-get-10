@@ -11,7 +11,7 @@ Grid.prototype.fromState = function(state){
     for (var r=0; r<size; r++){
       row.push(state[c][r]);
     }
-    cells.push(row):
+    cells.push(row);
   }
   return cells;
 };
@@ -19,12 +19,12 @@ Grid.prototype.fromState = function(state){
 // Returns a random grid with cells between 1 and lim
 Grid.prototype.random = function(lim) {
   var cells = [];
-  for (var c=0; c<size; c++){
+  for (var c=0; c<this.size; c++){
     var row = [];
-    for (var r=0; r<size; r++){
+    for (var r=0; r<this.size; r++){
       row.push(this.randomNumber(lim));
     }
-    cells.push(row):
+    cells.push(row);
   }
   return cells;
 };

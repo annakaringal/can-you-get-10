@@ -35,7 +35,7 @@ Game.prototype.finished = function(){
 Game.prototype.mergesAvailable = function(){
   for (var row=0; row<size; row++){
     for (var col=0; col<size; col++){
-      if (canMerge(row, col) return true;
+      if (canMerge(row, col)) return true;
     }
   }
   return false;
@@ -70,7 +70,7 @@ Game.prototype.canMerge = function(row, col){
 Game.prototype.merge = function(row, col, target){
 
   // Return if can't merge cell
-  if !canMerge(row, col) return;
+  if (!canMerge(row, col)) return;
 
   var cell = this.grid.cell(row,col);
   for (var dir=0; dir<4; dir++){
