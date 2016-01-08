@@ -1,6 +1,6 @@
-function Grid(size, highestNumber, prevState){
-  this.size = size || 5;
-  this.cells = prevState ? this.fromState(prevState) : this.random(highestNumber);
+function Grid(options){
+  this.size = options.size || 5;
+  this.cells = options.prevState ? this.fromState(options.prevState) : this.random(options.highestNumber);
 }
 
 // Generates a grid based on a given state
