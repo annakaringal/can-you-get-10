@@ -64,4 +64,28 @@ Game.prototype.canMerge = function(row, col){
     if (cell === adjacent.content) return true;
   }
   return false;
-}
+};
+
+// Merge given cell with any adjacent cells with the same content
+Game.prototype.merge = function(row, col, target){
+
+  // Return if can't merge cell
+  if !canMerge(row, col) return;
+
+  var cell = this.grid.cell(row,col);
+  for (var dir=0; dir<4; dir++){
+    var adjacent = adjacentCell(row, col, dir);
+    if (cell === adjacent.content) { 
+      this.merge(adjacent.x, adjacent.y);
+    }
+  }
+
+  // Replace cell content
+  if (!target){
+    this.grid.replaceWithRandom(row, col, highestNumber);
+  } else {
+    this.grid.setCell(row, col, cell+1);
+    if (cell+1 > this.highestNumber) this.highestNumber = cell+1;
+  }
+
+};
