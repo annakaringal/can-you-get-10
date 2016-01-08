@@ -14,14 +14,17 @@ function Game(options){
   this.setup();
 }
 
+// Set up with new grid of random nubmers
 Game.prototype.setup = function(){
   this.grid = new Grid({size: this.size, highestNumber: this.highestNumber});
 };
 
+// Check if goal has been reached
 Game.prototype.won = function() {
   return this.highestNumber === this.goalNumber;
 };
 
+// Game is finished if won or no more cells can be merged
 Game.prototype.finished = function(){
   this.won() || !this.mergesAvailable();
 };
@@ -38,6 +41,7 @@ Game.prototype.mergesAvailable = function(){
   return false;
 };
 
+// Return directions vector
 Game.prototype.directionVector = function(dir){
   return this.directions[dir];
 };
