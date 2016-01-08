@@ -33,3 +33,7 @@ Grid.prototype.random = function(lim) {
 Grid.prototype.randomNumber = function(lim){
   return Math.floor((Math.random() * lim) + 1);
 };
+
+Grid.prototype.cell = function(row, col){
+  return this.cells[row][col];
+};
