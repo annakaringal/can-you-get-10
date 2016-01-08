@@ -14,3 +14,7 @@ Game.prototype.setup = function(){
 Game.prototype.won = function() {
   return this.highestNumber == this.goalNumber;
 };
+
+Game.prototype.finished = function(){
+  this.won() || !this.mergeAvailable();
+};
