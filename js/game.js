@@ -10,3 +10,7 @@ function Game(size, highestNumber){
 Game.prototype.setup = function(){
   this.grid = new Grid(this.size, this.highestNumber);
 };
+
+Game.prototype.won = function() {
+  return this.highestNumber == this.goalNumber;
+};
