@@ -33,11 +33,9 @@ Game.prototype.finished = function(){
 // TODO: make more efficient by skipping tiles who can be merged with neighbor
 // that has already been checked
 Game.prototype.mergesAvailable = function(){
-  for (var row=0; row<size; row++){
-    for (var col=0; col<size; col++){
-      if (canMerge(row, col)) return true;
-    }
-  }
+  this.grid.eachCell(function (row, col) {
+    if (canMerge(row, col)) return true;
+  });
   return false;
 };
 

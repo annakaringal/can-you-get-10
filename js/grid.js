@@ -4,6 +4,15 @@ function Grid(opts){
   this.cells = options.prevState ? this.fromState(options.prevState) : this.random(options.highestNumber);
 }
 
+// Call callback for every cell
+Grid.prototype.eachCell = function (callback) {
+  for (var row=0; row<this.size; row++) {
+    for (var col=0; col<this.size; col++) {
+      callback(row, col);
+    }
+  }
+};
+
 // Generates a grid based on a given state
 Grid.prototype.fromState = function(state){
   var cells = [];
