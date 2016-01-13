@@ -47,16 +47,25 @@ Grid.prototype.randomNumber = function(lim){
 
 // Returns cell content
 Grid.prototype.cell = function(row, col){
+  if (outOfBounds(row, col)) return;
   return this.cells[row][col];
 };
 
 // Replace cell content with a random number 
 Grid.prototype.replaceWithRandom = function(row, col, lim){
+  if (outOfBounds(row,col) || !lim) return;
   this.cells[row][col] = this.randomNumber(lim);
 };
 
 // Sets cell content to val
 Grid.prototype.setCell = function(row, col, val){
-  if (val < 0 || val > this.highestNumber) return;
+  if (val < 1 || val > this.highestNumber || outOfBounds(row, col)) return;
   this.cells[row][col] = val;
 };
+
+// Checks to see if row & col are valid cells in grid
+Grid.prototype.outOfBounds = function(row, col){
+  var invalidRow = row < 0 || row >= this.size;
+  var invalidCol = col < 0 || col >= this.size;
+  return invalidRow || invalidCol;
+}
