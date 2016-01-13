@@ -47,7 +47,7 @@ Grid.prototype.randomNumber = function(lim){
 
 // Returns cell content
 Grid.prototype.cell = function(row, col){
-  if (outOfBounds(row, col)) return;
+  if (this.outOfBounds(row, col)) return;
   return this.cells[row][col];
 };
 
@@ -59,7 +59,7 @@ Grid.prototype.replaceWithRandom = function(row, col, lim){
 
 // Sets cell content to val
 Grid.prototype.setCell = function(row, col, val){
-  if (val < 1 || val > this.highestNumber || outOfBounds(row, col)) return;
+  if (val < 1 || val > this.highestNumber || this.outOfBounds(row, col)) return;
   this.cells[row][col] = val;
 };
 
