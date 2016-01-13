@@ -1,14 +1,15 @@
 describe("Grid", function() {
   var grid;
+  var gridSize = 5
 
   beforeEach(function() {
     grid = new Grid();
   });
 
   it("should create a grid of a default size 5x5", function() {
-    var randomRow = Math.floor(Math.random()*5);
-    expect(grid.cells.length).toEqual(5);
-    expect(grid.cells[randomRow].length).toEqual(5);
+    var randomRow = Math.floor(Math.random()*gridSize);
+    expect(grid.cells.length).toEqual(gridSize);
+    expect(grid.cells[randomRow].length).toEqual(gridSize);
   });
 
   it("should create a new non empty grid with random numbers, given no state", function() {
