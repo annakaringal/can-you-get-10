@@ -46,11 +46,11 @@ Game.prototype.directionVector = function(dir){
 
 // Returns value in adjacent cell 
 Game.prototype.adjacentCell = function(row, col, dir){
-  var vec = directionVector(dir);
+  var vec = this.directionVector(dir);
   return {
-    x: row + vec.x, 
-    y: row + vec.y, 
-    content: this.grid.cell(row + vec.x, col + vec.y)
+    x: row + vec.y, 
+    y: col + vec.x, 
+    content: this.grid.cell(row + vec.y, col + vec.x)
   };
 };
 
