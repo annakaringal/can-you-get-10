@@ -57,5 +57,6 @@ Grid.prototype.replaceWithRandom = function(row, col, lim){
 
 // Sets cell content to val
 Grid.prototype.setCell = function(row, col, val){
+  if (val < 0 || val > this.highestNumber) return;
   this.cells[row][col] = val;
 };
