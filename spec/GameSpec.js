@@ -35,11 +35,7 @@ describe("Game", function() {
         break;
       }
     }
-    expect(function(){
-      var can = game.canMerge(randomRow, randomCol);
-      console.log(can);
-      return can;
-    }()).toEqual(mergeable);
+    expect(game.canMerge(randomRow, randomCol)).toEqual(mergeable);
   });
 
 });
