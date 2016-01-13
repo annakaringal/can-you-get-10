@@ -4,8 +4,7 @@ beforeEach(function () {
       return {
         compare: function (actual) {
           var grid = actual;
-          // var containsEmptyCell = false; 
-          var containsEmptyCell;
+          var containsEmptyCell = false;
           grid.eachCell(function(row, col){
             if (!grid.cell(row, col)){
               containsEmptyCell = true;
@@ -13,7 +12,7 @@ beforeEach(function () {
           });
 
           return {
-            pass: containsEmptyCell
+            pass: !containsEmptyCell
           };
         }
       };
