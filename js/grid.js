@@ -1,7 +1,8 @@
 function Grid(opts){
   var options = opts || {};
   this.size = options.size || 5;
-  this.cells = options.prevState ? this.fromState(options.prevState) : this.random(options.highestNumber);
+  this.highestNumber = options.highestNumber || 4;
+  this.cells = options.prevState ? this.fromState(options.prevState) : this.random(this.highestNumber);
 }
 
 // Call callback for every cell
