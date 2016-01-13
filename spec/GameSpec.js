@@ -1,9 +1,12 @@
 describe("Game", function() {
   var game;
+  var randomRow, randomCol;
   var gridSize = 5;
 
   beforeEach(function() {
     game = new Game();
+    randomRow = Math.floor(Math.random()*(gridSize-1));
+    randomCol = Math.floor(Math.random()*(gridSize-1));
   });
 
   it ('should create a non-empty grid of random numbers', function(){
@@ -11,8 +14,9 @@ describe("Game", function() {
   });
 
   it ('returns the correct adjacent value', function(){
-    var randomRow = Math.floor(Math.random()*(gridSize-1)+1);
-    var randomCol = Math.floor(Math.random()*(gridSize-1));
+    if (randomRow == 0){
+      randomRow = 1;
+    }
     var up = 0;
     var cellAbove = game.grid.cell(randomRow-1, randomCol);
     expect(game.adjacentCell(randomRow, randomCol, up).x).toEqual(randomRow-1);
@@ -21,10 +25,7 @@ describe("Game", function() {
   });
 
   it ('returns whether or not the cell is mergeable', function(){
-    var randomRow = Math.floor(Math.random()*(gridSize-1));
-    var randomCol = Math.floor(Math.random()*(gridSize-1));
     var cell = game.grid.cell(randomRow, randomCol);
-
     var mergeable = false;
     for (var dir=0; dir < 4; dir++){
       var adjacent = game.adjacentCell(randomRow, randomCol, dir);
