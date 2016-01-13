@@ -47,18 +47,23 @@ Game.prototype.directionVector = function(dir){
 // Returns value in adjacent cell 
 Game.prototype.adjacentCell = function(row, col, dir){
   var vec = this.directionVector(dir);
-  return {
-    x: row + vec.y, 
-    y: col + vec.x, 
-    content: this.grid.cell(row + vec.y, col + vec.x)
-  };
+  var newRow = row + vec.y;
+  var newCol = col + vec.x;
+  if (!this.grid.outOfBounds(newRow, newCol)){
+    return {
+      x: newRow, 
+      y: newCol, 
+      content: this.grid.cell(newRow, newCol)
+    };
+  }
 };
 
 // Returns true if cell is mergeable, i.e. has adjacent cells with same value
 Game.prototype.canMerge = function(row, col){
   var cell = this.grid.cell(row, col);
-  for (var dir=0; dir<4; dir++){
-    var adjacent = adjacentCell(row, col, dir);
+  for(var dir=0; dir<4; dir++){
+    var adjacent = this.adjacentCell(row, col, dir);
+    if (!adjacent) continue;
     if (cell === adjacent.content) return true;
   }
   return false;
