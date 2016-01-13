@@ -1,13 +1,15 @@
 describe("Grid", function() {
   var grid;
+  var randomRow, randomCol;
   var gridSize = 5
 
   beforeEach(function() {
     grid = new Grid();
+    randomRow = Math.floor(Math.random()*(gridSize-1));
+    randomCol = Math.floor(Math.random()*(gridSize-1));
   });
 
   it("should create a grid of a default size 5x5", function() {
-    var randomRow = Math.floor(Math.random()*gridSize);
     expect(grid.cells.length).toEqual(gridSize);
     expect(grid.cells[randomRow].length).toEqual(gridSize);
   });
@@ -37,16 +39,12 @@ describe("Grid", function() {
   });
 
   it ("should set and return the correct cell number", function(){
-    var randomRow = Math.floor(Math.random()*gridSize);
-    var randomCol = Math.floor(Math.random()*gridSize);
     var val = 1;
     grid.setCell(randomRow, randomCol, val);
     expect(grid.cell(randomRow, randomCol)).toEqual(val);
   });
 
   it ("should not set cell to an invalid value", function(){
-    var randomRow = Math.floor(Math.random()*gridSize);
-    var randomCol = Math.floor(Math.random()*gridSize);
     var oldVal = grid.cell(randomRow, randomCol);
     var newVal = -1;
     grid.setCell(randomRow, randomCol, newVal);
