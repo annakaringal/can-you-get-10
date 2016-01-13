@@ -17,7 +17,7 @@ describe("Grid", function() {
   });
 
   it("should construct a new non empty grid with numbers between 1 and highestNumber", function() {
-    var highestNumber = Math.floor(Math.random()*10);
+    var highestNumber = Math.floor(Math.random()*10 + 1);
     var newGrid = new Grid({highestNumber: highestNumber});
 
     var actualHighest = 0;
