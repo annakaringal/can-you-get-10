@@ -11,8 +11,8 @@ describe("Game", function() {
   });
 
   it ('returns the correct adjacent value', function(){
-    var randomRow = Math.floor(Math.random()*gridSize);
-    var randomCol = Math.floor(Math.random()*gridSize);
+    var randomRow = Math.floor(Math.random()*(gridSize-1)+1);
+    var randomCol = Math.floor(Math.random()*(gridSize-1));
     var up = 0;
     var cellAbove = game.grid.cell(randomRow-1, randomCol);
     expect(game.adjacentCell(randomRow, randomCol, up).x).toEqual(randomRow-1);
