@@ -30,8 +30,6 @@ Game.prototype.finished = function(){
 };
 
 // Check each tile in grid to see if it can be merged
-// TODO: make more efficient by skipping tiles who can be merged with neighbor
-// that has already been checked
 Game.prototype.mergesAvailable = function(){
   this.grid.eachCell(function (row, col) {
     if (canMerge(row, col)) return true;
