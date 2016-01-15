@@ -61,4 +61,10 @@ describe("Grid", function() {
     expect(grid.cell(randomRow, randomCol)).toEqual(oldVal);
   });
 
+  it("should return the grid's current state as a string", function() {
+    var state = "2121134222332322331131131"
+    var gridFromState = new Grid({state: state});
+    expect(gridFromState.toString()).toEqual(state);
+  });
+
 });

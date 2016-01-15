@@ -9,7 +9,7 @@ function Grid(opts){
 Grid.prototype.eachCell = function (callback) {
   for (var row=0; row<this.size; row++) {
     for (var col=0; col<this.size; col++) {
-      callback(row, col);
+      callback(row, col, this.cells[row][col]);
     }
   }
 };
@@ -70,4 +70,13 @@ Grid.prototype.outOfBounds = function(row, col){
   var invalidRow = row < 0 || row >= this.size;
   var invalidCol = col < 0 || col >= this.size;
   return invalidRow || invalidCol;
-}
+};
+
+// Return state of grid as a string
+Grid.prototype.toString = function(){
+  var str = '';
+  this.eachCell(function(_r, _c, content){
+    str += content;
+  });
+  return str;
+};
