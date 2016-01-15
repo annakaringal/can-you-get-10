@@ -18,6 +18,16 @@ describe("Grid", function() {
     expect(grid).toBeNonEmpty(grid);
   });
 
+  it("should create a grid from a given state", function() {
+    var state = "2121134222332322331131131"
+    var gridFromState = new Grid({state: state});
+    expect(gridFromState.cells).toEqual([ [2,1,2,1,1],
+                                          [3,4,2,2,2],
+                                          [3,3,2,3,2],
+                                          [2,3,3,1,1],
+                                          [3,1,1,3,1] ]);
+  });
+
   it("should construct a new non empty grid with numbers between 1 and highestNumber", function() {
     var highestNumber = Math.floor(Math.random()*10 + 1);
     var newGrid = new Grid({highestNumber: highestNumber});

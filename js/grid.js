@@ -2,7 +2,7 @@ function Grid(opts){
   var options = opts || {};
   var highestNumber = options.highestNumber || 4;
   this.size = options.size || 5;
-  this.cells = options.prevState ? this.fromState(options.prevState) : this.random(highestNumber);
+  this.cells = options.state ? this.fromState(options.state) : this.random(highestNumber);
 }
 
 // Call callback for every cell
@@ -14,13 +14,15 @@ Grid.prototype.eachCell = function (callback) {
   }
 };
 
-// Generates a grid based on a given state
+// Generates a grid based on a state given as a string
 Grid.prototype.fromState = function(state){
   var cells = [];
-  for (var c=0; c<size; c++){
+  var count = 0;
+  for (var c=0; c<this.size; c++){
     var row = [];
-    for (var r=0; r<size; r++){
-      row.push(state[c][r]);
+    for (var r=0; r<this.size; r++){
+      row.push(parseInt(state[count]));
+      count++;
     }
     cells.push(row);
   }
