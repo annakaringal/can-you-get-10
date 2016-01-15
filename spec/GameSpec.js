@@ -20,8 +20,8 @@ describe("Game", function() {
     }
     var up = 0;
     var cellAbove = game.grid.cell(randomRow-1, randomCol);
-    expect(game.adjacentCell(randomRow, randomCol, up).x).toEqual(randomRow-1);
-    expect(game.adjacentCell(randomRow, randomCol, up).y).toEqual(randomCol);
+    expect(game.adjacentCell(randomRow, randomCol, up).x).toEqual(randomCol);
+    expect(game.adjacentCell(randomRow, randomCol, up).y).toEqual(randomRow-1);
     expect(game.adjacentCell(randomRow, randomCol, up).content).toEqual(cellAbove);
   });
 

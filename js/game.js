@@ -50,8 +50,8 @@ Game.prototype.adjacentCell = function(row, col, dir){
   var newCol = col + vec.x;
   if (!this.grid.outOfBounds(newRow, newCol)){
     return {
-      x: newRow, 
-      y: newCol, 
+      x: newCol, 
+      y: newRow, 
       content: this.grid.cell(newRow, newCol)
     };
   }
