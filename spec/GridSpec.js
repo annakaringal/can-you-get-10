@@ -2,6 +2,7 @@ describe("Grid", function() {
   var grid;
   var randomRow, randomCol;
   var gridSize = 5
+  var state = "2121134222332322331131131"
 
   beforeEach(function() {
     grid = new Grid();
@@ -19,7 +20,6 @@ describe("Grid", function() {
   });
 
   it("should create a grid from a given state", function() {
-    var state = "2121134222332322331131131"
     var gridFromState = new Grid({state: state});
     expect(gridFromState.cells).toEqual([ [2,1,2,1,1],
                                           [3,4,2,2,2],
@@ -62,7 +62,6 @@ describe("Grid", function() {
   });
 
   it("should return the grid's current state as a string", function() {
-    var state = "2121134222332322331131131"
     var gridFromState = new Grid({state: state});
     expect(gridFromState.toString()).toEqual(state);
   });
