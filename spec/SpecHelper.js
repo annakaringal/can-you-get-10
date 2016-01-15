@@ -1,12 +1,18 @@
 beforeEach(function () {
   jasmine.addMatchers({
-    toBePlaying: function () {
+    toBeNonEmpty: function () {
       return {
-        compare: function (actual, expected) {
-          var player = actual;
+        compare: function (actual) {
+          var grid = actual;
+          var containsEmptyCell = false;
+          grid.eachCell(function(row, col){
+            if (!grid.cell(row, col)){
+              containsEmptyCell = true;
+            }
+          });
 
           return {
-            pass: player.currentlyPlayingSong === expected && player.isPlaying
+            pass: !containsEmptyCell
           };
         }
       };
