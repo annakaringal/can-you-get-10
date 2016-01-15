@@ -55,7 +55,7 @@ Grid.prototype.cell = function(row, col){
 
 // Replace cell content with a random number 
 Grid.prototype.replaceWithRandom = function(row, col, lim){
-  if (outOfBounds(row,col) || !lim) return;
+  if (this.outOfBounds(row,col) || !lim) return;
   this.cells[row][col] = this.randomNumber(lim);
 };
 
