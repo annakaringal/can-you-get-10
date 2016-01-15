@@ -39,4 +39,20 @@ describe("Game", function() {
     expect(game.canMerge(randomRow, randomCol)).toEqual(mergeable);
   });
 
+  it ("increments correct cell when merged", function(){
+    game.merge(0,2);
+    expect(game.grid.cell(2,2)).toEqual(3);
+  });
+
+  it ('increments highest number in the game when current highest number is merged', function(){
+    game.merge(1,1);
+    expect(game.highestNumber).toEqual(5);
+  });
+
+  it ('does nothing when a cell cannot be merged', function(){
+    game.merge(0,0);
+    expect(game.grid.toString()).toEqual(state);
+  });
+
+
 });

@@ -68,26 +68,57 @@ Game.prototype.canMerge = function(row, col){
   return false;
 };
 
+Game.prototype.cellInArray = function(cell, arr){
+  for (var c=0; c<arr.length; c++){
+    if (cell.x === arr[c].x && cell.y === arr[c].y) return true;
+  }
+  return false;
+}
+
 // Merge given cell with any adjacent cells with the same content
-Game.prototype.merge = function(row, col, target){
+// and increment the value of the new merged cell
+Game.prototype.merge = function(row, col){
+  if (!this.canMerge(row, col)) return;
+  var selectedCell = {  x: col,
+                y: row,
+                content: this.grid.cell(row,col)
+              };
+  var mergeable = this.getMergeable(selectedCell);
 
-  // Return if can't merge cell
-  if (!canMerge(row, col)) return;
+  var newVal = selectedCell.content + 1;
+  if (newVal > this.highestNumber) this.highestNumber = newVal;
 
-  var cell = this.grid.cell(row,col);
-  for (var dir=0; dir<4; dir++){
-    var adjacent = adjacentCell(row, col, dir);
-    if (cell === adjacent.content) { 
-      this.merge(adjacent.x, adjacent.y);
+  for (var c=0; c < mergeable.cells.length; c++){
+    var cell = mergeable.cells[c];
+    if (cell === mergeable.target){
+      this.grid.setCell(cell.y, cell.x, newVal);
+    } else {
+      this.grid.replaceWithRandom(cell.y, cell.x, this.highestNumber);
     }
   }
+};
 
-  // Replace cell content
-  if (!target){
-    this.grid.replaceWithRandom(row, col, highestNumber);
+// Recursively get cells that are can be merged with the passed cell
+Game.prototype.getMergeable = function(cell, mergeable){
+  var mergeable = mergeable || { cells: [],
+                                  target: cell
+                                };
+  if (cell.content === mergeable.target.content){
+    mergeable.cells.push(cell);
   } else {
-    this.grid.setCell(row, col, cell+1);
-    if (cell+1 > this.highestNumber) this.highestNumber = cell+1;
+    return;
   }
+  for(var dir=0; dir<4; dir++){
+    var adjacent = this.adjacentCell(cell.y, cell.x, dir);
+    if (!adjacent) continue;
+    if (this.cellInArray(adjacent, mergeable.cells)) continue;
 
+    if (mergeable.target.content === adjacent.content){
+      if (adjacent.x === mergeable.target.x && adjacent.y > mergeable.target.y){
+        mergeable.target = adjacent;
+      };
+      mergeable.cells.concat(this.getMergeable(adjacent, mergeable));
+    }
+  }
+  return mergeable;
 };
