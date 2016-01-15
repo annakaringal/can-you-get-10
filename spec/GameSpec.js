@@ -2,9 +2,10 @@ describe("Game", function() {
   var game;
   var randomRow, randomCol;
   var gridSize = 5;
+  var state = "2121144222332322331131131"
 
   beforeEach(function() {
-    game = new Game();
+    game = new Game({state: state});
     randomRow = Math.floor(Math.random()*(gridSize-1));
     randomCol = Math.floor(Math.random()*(gridSize-1));
   });

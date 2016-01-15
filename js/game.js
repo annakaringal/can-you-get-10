@@ -1,8 +1,9 @@
 function Game(opts){
   var options = opts || {};
-  this.size = options.size || 5;
+  var gridSize = options.size || 5;
   this.highestNumber = options.highestNumber || 4;
   this.goalNumber = 10;
+  var state = options.state;
 
   this.directions = {
     0: {x: 0, y:  -1}, // up
@@ -11,12 +12,12 @@ function Game(opts){
     3: {x: -1, y: 0}  // left
   };
 
-  this.setup();
+  this.setup(gridSize, state);
 }
 
 // Set up with new grid of random nubmers
-Game.prototype.setup = function(){
-  this.grid = new Grid({size: this.size, highestNumber: this.highestNumber});
+Game.prototype.setup = function(gridSize, state){
+  this.grid = new Grid({size: gridSize, highestNumber: this.highestNumber, state: state});
 };
 
 // Check if goal has been reached
