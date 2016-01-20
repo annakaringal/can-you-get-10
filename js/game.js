@@ -84,29 +84,15 @@ Game.prototype.merge = function(row, col){
                         value: this.grid.cell(row,col)
                       };
 
-  var newVal = selectedCell.value + 1;
-  if (newVal > this.highestNumber) this.highestNumber = newVal;
-
-  for (var c=0; c < mergeable.cells.length; c++){
-    var cell = mergeable.cells[c];
-    if (cell === mergeable.target){
-      this.grid.setCell(cell.y, cell.x, newVal);
-    } else {
-      this.grid.replaceWithRandom(cell.y, cell.x, this.highestNumber);
-    }
-  }
+  var mergeable = this.getMergeable(selectedCell);
+  this.incrementTarget(mergeable.target);
+  this.replaceMergeable(mergeable.cells, mergeable.target);
 };
 
-// Recursively get cells that can be merged with the passed cell
-Game.prototype.getMergeable = function(cell, mergeable){
-  var mergeable = mergeable || { cells: [],
-                                  target: cell
-                                };
-  if (cell.value === mergeable.target.value){
-    mergeable.cells.push(cell);
-  } else {
-    return;
-  }
+// Recursively return cells that can be merged with the passed cell
+Game.prototype.getMergeable = function(cell, mergeableCells){
+  var mergeable = mergeableCells || { cells: [], target: cell };
+
   for(var dir=0; dir<4; dir++){
     var adjacent = this.adjacentCell(cell.y, cell.x, dir);
     if (!adjacent) continue;
@@ -115,9 +101,47 @@ Game.prototype.getMergeable = function(cell, mergeable){
     if (mergeable.target.value === adjacent.value){
       if (adjacent.x === mergeable.target.x && adjacent.y > mergeable.target.y){
         mergeable.target = adjacent;
-      };
+      } 
+      mergeable.cells.push(adjacent);
       mergeable.cells.concat(this.getMergeable(adjacent, mergeable));
     }
   }
   return mergeable;
 };
+
+Game.prototype.incrementTarget = function(target){
+  var newVal = target.value + 1;
+  if (newVal > this.highestNumber) this.highestNumber = newVal;
+  this.grid.setCell(target.y, target.x, newVal);
+};
+
+Game.prototype.isTarget = function(cell, target){
+  if (!cell || !target) return;
+  return cell.x === target.x && cell.y === target.y;
+};
+
+// Drop any cells above mergeable cells and replace with random number
+Game.prototype.replaceMergeable = function(mergeable, target){
+  var emptyCells = [];
+  var game = this;
+
+  this.grid.eachCell(function(r,c,v){
+    var cell = {x: c, y: r, value: v};
+    if (this.cellInArray(cell, mergeable) && !this.isTarget(cell, target)){
+      var above = {x: c, y: r-1, value: this.grid.cell(r-1, c)};
+      if (above.value && above.value !== -1){
+        this.grid.setCell(cell.y, cell.x, above.value);
+        this.grid.setCell(above.y, above.x, -1);
+        emptyCells.push(above);
+      } else{
+        this.grid.setCell(cell.y, cell.x, -1);
+        emptyCells.push({y: cell.y, x: cell.x});
+      }
+    }
+  }.bind(this));
+
+  emptyCells.forEach(function(cell){
+    this.grid.replaceWithRandom(cell.y, cell.x, this.highestNumber);
+  }.bind(this));
+};
+
