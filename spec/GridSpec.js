@@ -1,8 +1,8 @@
 describe("Grid", function() {
   var grid;
   var randomRow, randomCol;
-  var gridSize = 5
-  var state = "2121134222332322331131131"
+  var gridSize = 5;
+  var state = "2121134222332322331131131";
 
   beforeEach(function() {
     grid = new Grid();

@@ -2,7 +2,7 @@ describe("Game", function() {
   var game;
   var randomRow, randomCol;
   var gridSize = 5;
-  var state = "2121144222332322331131131"
+  var state = "2121144222332322331131131";
 
   beforeEach(function() {
     game = new Game({state: state});
@@ -15,14 +15,14 @@ describe("Game", function() {
   });
 
   it ('returns the correct adjacent value', function(){
-    if (randomRow == 0){
+    if (randomRow === 0){
       randomRow = 1;
     }
     var up = 0;
     var cellAbove = game.grid.cell(randomRow-1, randomCol);
-    expect(game.adjacentCell(randomRow, randomCol, up).x).toEqual(randomCol);
-    expect(game.adjacentCell(randomRow, randomCol, up).y).toEqual(randomRow-1);
-    expect(game.adjacentCell(randomRow, randomCol, up).content).toEqual(cellAbove);
+    expect(game.adjacentCell(randomRow, randomCol, up).c).toEqual(randomCol);
+    expect(game.adjacentCell(randomRow, randomCol, up).r).toEqual(randomRow-1);
+    expect(game.adjacentCell(randomRow, randomCol, up).value).toEqual(cellAbove);
   });
 
   it ('returns whether or not the cell is mergeable', function(){
@@ -31,7 +31,7 @@ describe("Game", function() {
     for (var dir=0; dir < 4; dir++){
       var adjacent = game.adjacentCell(randomRow, randomCol, dir);
       if (!adjacent) continue;
-      if (adjacent.content == cell){
+      if (adjacent.value == cell){
         mergeable = true;
         break;
       }

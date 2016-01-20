@@ -9,7 +9,8 @@ function Grid(opts){
 Grid.prototype.eachCell = function (callback) {
   for (var row=0; row<this.size; row++) {
     for (var col=0; col<this.size; col++) {
-      callback(row, col, this.cells[row][col]);
+      var val = this.cells[row][col];
+      callback(row, col, val);
     }
   }
 };
@@ -47,19 +48,19 @@ Grid.prototype.randomNumber = function(lim){
   return Math.floor((Math.random() * lim) + 1);
 };
 
-// Returns cell content
+// Returns cell value
 Grid.prototype.cell = function(row, col){
   if (this.outOfBounds(row, col)) return;
   return this.cells[row][col];
 };
 
-// Replace cell content with a random number 
+// Replace cell value with a random number 
 Grid.prototype.replaceWithRandom = function(row, col, lim){
   if (this.outOfBounds(row,col) || !lim) return;
   this.cells[row][col] = this.randomNumber(lim);
 };
 
-// Sets cell content to val
+// Sets cell value to val
 Grid.prototype.setCell = function(row, col, val){
   if (val < 1 || this.outOfBounds(row, col)) return;
   this.cells[row][col] = val;
@@ -75,8 +76,8 @@ Grid.prototype.outOfBounds = function(row, col){
 // Return state of grid as a string
 Grid.prototype.toString = function(){
   var str = '';
-  this.eachCell(function(_r, _c, content){
-    str += content;
+  this.eachCell(function(_r, _c, val){
+    str += val;
   });
   return str;
 };
