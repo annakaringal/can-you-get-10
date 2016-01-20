@@ -33,7 +33,7 @@ Game.prototype.finished = function(){
 // Check each tile in grid to see if it can be merged
 Game.prototype.mergesAvailable = function(){
   this.grid.eachCell(function (row, col) {
-    if (canMerge(row, col)) return true;
+    if (this.canMerge(row, col)) return true;
   });
   return false;
 };
