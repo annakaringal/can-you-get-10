@@ -27,7 +27,7 @@ Game.prototype.won = function() {
 
 // Game is finished if won or no more cells can be merged
 Game.prototype.finished = function(){
-  this.won() || !this.mergesAvailable();
+  return this.won() || !this.mergesAvailable();
 };
 
 // Check each tile in grid to see if it can be merged
@@ -73,7 +73,7 @@ Game.prototype.cellInArray = function(cell, arr){
     if (cell.x === arr[c].x && cell.y === arr[c].y) return true;
   }
   return false;
-}
+};
 
 // Merge given cell with any adjacent cells with the same value
 // and increment the value of the new merged cell

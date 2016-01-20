@@ -2,7 +2,7 @@ describe("Game", function() {
   var game;
   var randomRow, randomCol;
   var gridSize = 5;
-  var state = "2121144222332322331131131"
+  var state = "2121144222332322331131131";
 
   beforeEach(function() {
     game = new Game({state: state});
@@ -15,7 +15,7 @@ describe("Game", function() {
   });
 
   it ('returns the correct adjacent value', function(){
-    if (randomRow == 0){
+    if (randomRow === 0){
       randomRow = 1;
     }
     var up = 0;
