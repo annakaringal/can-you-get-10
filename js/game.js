@@ -52,7 +52,7 @@ Game.prototype.adjacentCell = function(row, col, dir){
     return {
       x: newCol, 
       y: newRow, 
-      content: this.grid.cell(newRow, newCol)
+      value: this.grid.cell(newRow, newCol)
     };
   }
 };
@@ -63,7 +63,7 @@ Game.prototype.canMerge = function(row, col){
   for(var dir=0; dir<4; dir++){
     var adjacent = this.adjacentCell(row, col, dir);
     if (!adjacent) continue;
-    if (cell === adjacent.content) return true;
+    if (cell === adjacent.value) return true;
   }
   return false;
 };
@@ -75,17 +75,16 @@ Game.prototype.cellInArray = function(cell, arr){
   return false;
 }
 
-// Merge given cell with any adjacent cells with the same content
+// Merge given cell with any adjacent cells with the same value
 // and increment the value of the new merged cell
 Game.prototype.merge = function(row, col){
   if (!this.canMerge(row, col)) return;
   var selectedCell = {  x: col,
-                y: row,
-                content: this.grid.cell(row,col)
-              };
-  var mergeable = this.getMergeable(selectedCell);
+                        y: row,
+                        value: this.grid.cell(row,col)
+                      };
 
-  var newVal = selectedCell.content + 1;
+  var newVal = selectedCell.value + 1;
   if (newVal > this.highestNumber) this.highestNumber = newVal;
 
   for (var c=0; c < mergeable.cells.length; c++){
@@ -98,12 +97,12 @@ Game.prototype.merge = function(row, col){
   }
 };
 
-// Recursively get cells that are can be merged with the passed cell
+// Recursively get cells that can be merged with the passed cell
 Game.prototype.getMergeable = function(cell, mergeable){
   var mergeable = mergeable || { cells: [],
                                   target: cell
                                 };
-  if (cell.content === mergeable.target.content){
+  if (cell.value === mergeable.target.value){
     mergeable.cells.push(cell);
   } else {
     return;
@@ -113,7 +112,7 @@ Game.prototype.getMergeable = function(cell, mergeable){
     if (!adjacent) continue;
     if (this.cellInArray(adjacent, mergeable.cells)) continue;
 
-    if (mergeable.target.content === adjacent.content){
+    if (mergeable.target.value === adjacent.value){
       if (adjacent.x === mergeable.target.x && adjacent.y > mergeable.target.y){
         mergeable.target = adjacent;
       };
