@@ -6,10 +6,10 @@ function Game(opts){
   var state = options.state;
 
   this.directions = {
-    0: {x: 0, y:  -1}, // up
-    1: {x: 1, y: 0}, // right
-    2: {x: 0, y: 1}, // down
-    3: {x: -1, y: 0}  // left
+    0: {c: 0, r:  -1}, // up
+    1: {c: 1, r: 0}, // right
+    2: {c: 0, r: 1}, // down
+    3: {c: -1, r: 0}  // left
   };
 
   this.setup(gridSize, state);
@@ -46,12 +46,12 @@ Game.prototype.directionVector = function(dir){
 // Returns value in adjacent cell 
 Game.prototype.adjacentCell = function(row, col, dir){
   var vec = this.directionVector(dir);
-  var newRow = row + vec.y;
-  var newCol = col + vec.x;
+  var newRow = row + vec.r;
+  var newCol = col + vec.c;
   if (!this.grid.outOfBounds(newRow, newCol)){
     return {
-      x: newCol, 
-      y: newRow, 
+      r: newRow, 
+      c: newCol, 
       value: this.grid.cell(newRow, newCol)
     };
   }
@@ -69,8 +69,8 @@ Game.prototype.canMerge = function(row, col){
 };
 
 Game.prototype.cellInArray = function(cell, arr){
-  for (var c=0; c<arr.length; c++){
-    if (cell.x === arr[c].x && cell.y === arr[c].y) return true;
+  for (var i=0; i<arr.length; i++){
+    if (cell.r === arr[i].r && cell.c === arr[i].c) return true;
   }
   return false;
 };
@@ -79,8 +79,9 @@ Game.prototype.cellInArray = function(cell, arr){
 // and increment the value of the new merged cell
 Game.prototype.merge = function(row, col){
   if (!this.canMerge(row, col)) return;
-  var selectedCell = {  x: col,
-                        y: row,
+  var selectedCell = {  
+                        r: row,
+                        c: col,
                         value: this.grid.cell(row,col)
                       };
 
@@ -94,12 +95,12 @@ Game.prototype.getMergeable = function(cell, mergeableCells){
   var mergeable = mergeableCells || { cells: [], target: cell };
 
   for(var dir=0; dir<4; dir++){
-    var adjacent = this.adjacentCell(cell.y, cell.x, dir);
+    var adjacent = this.adjacentCell(cell.r, cell.c, dir);
     if (!adjacent) continue;
     if (this.cellInArray(adjacent, mergeable.cells)) continue;
 
     if (mergeable.target.value === adjacent.value){
-      if (adjacent.x === mergeable.target.x && adjacent.y > mergeable.target.y){
+      if (adjacent.c === mergeable.target.c && adjacent.r > mergeable.target.r){
         mergeable.target = adjacent;
       } 
       mergeable.cells.push(adjacent);
@@ -112,12 +113,12 @@ Game.prototype.getMergeable = function(cell, mergeableCells){
 Game.prototype.incrementTarget = function(target){
   var newVal = target.value + 1;
   if (newVal > this.highestNumber) this.highestNumber = newVal;
-  this.grid.setCell(target.y, target.x, newVal);
+  this.grid.setCell(target.r, target.c, newVal);
 };
 
 Game.prototype.isTarget = function(cell, target){
   if (!cell || !target) return;
-  return cell.x === target.x && cell.y === target.y;
+  return cell.c === target.c && cell.r === target.r;
 };
 
 // Drop any cells above mergeable cells and replace with random number
@@ -126,22 +127,22 @@ Game.prototype.replaceMergeable = function(mergeable, target){
   var game = this;
 
   this.grid.eachCell(function(r,c,v){
-    var cell = {x: c, y: r, value: v};
+    var cell = {c: c, r: r, value: v};
     if (this.cellInArray(cell, mergeable) && !this.isTarget(cell, target)){
-      var above = {x: c, y: r-1, value: this.grid.cell(r-1, c)};
+      var above = {c: c, r: r-1, value: this.grid.cell(r-1, c)};
       if (above.value && above.value !== -1){
-        this.grid.setCell(cell.y, cell.x, above.value);
-        this.grid.setCell(above.y, above.x, -1);
+        this.grid.setCell(cell.r, cell.c, above.value);
+        this.grid.setCell(above.r, above.c, -1);
         emptyCells.push(above);
       } else{
-        this.grid.setCell(cell.y, cell.x, -1);
-        emptyCells.push({y: cell.y, x: cell.x});
+        this.grid.setCell(cell.r, cell.c, -1);
+        emptyCells.push({r: cell.r, c: cell.c});
       }
     }
   }.bind(this));
 
   emptyCells.forEach(function(cell){
-    this.grid.replaceWithRandom(cell.y, cell.x, this.highestNumber);
+    this.grid.replaceWithRandom(cell.r, cell.c, this.highestNumber);
   }.bind(this));
 };
 
