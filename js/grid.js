@@ -9,7 +9,8 @@ function Grid(opts){
 Grid.prototype.eachCell = function (callback) {
   for (var row=0; row<this.size; row++) {
     for (var col=0; col<this.size; col++) {
-      callback(row, col, this.cells[row][col]);
+      var val = this.cells[row][col];
+      callback(row, col, val);
     }
   }
 };
