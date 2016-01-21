@@ -87,7 +87,14 @@ Game.prototype.merge = function(row, col){
 
   var mergeable = this.getMergeable(selectedCell);
   this.incrementTarget(mergeable.target);
-  this.replaceMergeable(mergeable.cells, mergeable.target);
+  var replaced = this.replaceMergeable(mergeable.cells, mergeable.target);
+
+  return {
+            target: mergeable.target,
+            merged: mergeable.cells,
+            dropped: replaced.dropped,
+            replaced: replaced.fromAbove
+          };
 };
 
 // Recursively return cells that can be merged with the passed cell
@@ -124,6 +131,7 @@ Game.prototype.isTarget = function(cell, target){
 // Drop any cells above mergeable cells and replace with random number
 Game.prototype.replaceMergeable = function(mergeable, target){
   var emptyCells = [];
+  var dropped = [];
   var game = this;
 
   this.grid.eachCell(function(r,c,v){
@@ -134,9 +142,10 @@ Game.prototype.replaceMergeable = function(mergeable, target){
         this.grid.setCell(cell.r, cell.c, above.value);
         this.grid.setCell(above.r, above.c, -1);
         emptyCells.push(above);
+        dropped.push(above);
       } else{
         this.grid.setCell(cell.r, cell.c, -1);
-        emptyCells.push({r: cell.r, c: cell.c});
+        emptyCells.push(cell);
       }
     }
   }.bind(this));
@@ -144,5 +153,10 @@ Game.prototype.replaceMergeable = function(mergeable, target){
   emptyCells.forEach(function(cell){
     this.grid.replaceWithRandom(cell.r, cell.c, this.highestNumber);
   }.bind(this));
+
+  return {
+            dropped: dropped, 
+            fromAbove: emptyCells
+          }
 };
 
