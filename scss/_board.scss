@@ -1,0 +1,37 @@
+$grid-width: 500px;
+$grid-spacing: 10px;
+$grid-row-cells: 5;
+
+$cell-size: $grid-width / $grid-row-cells;
+$tile-size: $cell-size - $grid-spacing;
+$cell-border-radius: 3px;
+
+#grid {
+  font-family: $grid-font;
+  width: $grid-width;
+  height: $grid-width;
+  margin:0 auto;
+
+  .cell {
+    width: $cell-size;
+    height: $cell-size;
+    float:left;
+    text-align: center;
+
+    .tile {
+      background-color: #ccc;
+      border-radius: $cell-border-radius;
+      display:block;
+      height:$tile-size;
+      width:$tile-size;
+      margin:0 auto;
+    }
+
+    h1 {
+      position:relative; 
+      top:50%;
+      transform: translateY(-50%);
+      margin:0;
+    }
+  }
+}

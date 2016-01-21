@@ -1,0 +1,38 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+#grid {
+  font-family: "Roboto", sans-serif;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto; }
+  #grid .cell {
+    width: 100px;
+    height: 100px;
+    float: left;
+    text-align: center; }
+    #grid .cell .tile {
+      background-color: #ccc;
+      border-radius: 3px;
+      display: block;
+      height: 90px;
+      width: 90px;
+      margin: 0 auto; }
+    #grid .cell h1 {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  color: #000; }
+
+header {
+  text-align: center;
+  width: 100%; }
+
+.container {
+  width: 100%; }
+
+/*# sourceMappingURL=main.css.map */
