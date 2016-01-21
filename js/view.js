@@ -2,6 +2,7 @@ function View(game){
   this.game = game;
   this.gridDiv = document.getElementById('grid');
 
+  this.gridDiv.addEventListener('click', this.merge.bind(this), false);
   this.renderCells();
 }
 
