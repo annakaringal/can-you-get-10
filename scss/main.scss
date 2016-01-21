@@ -1,0 +1,18 @@
+@import 'vars';
+@import 'globals';
+@import 'board';
+
+html, body {
+  margin: 0; 
+  padding:0;
+  font-family: $main-font;
+  color: $text-color;
+}
+
+header {
+  text-align: center;
+  width:100%;
+}
+.container{
+width: 100%;
+}
