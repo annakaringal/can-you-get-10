@@ -11,7 +11,7 @@ View.prototype.renderCells = function(){
   this.game.grid.eachCell(function(r,c,val){ 
     var cell = document.createElement('div');
     cell.className = 'cell';
-    cell.innerHTML = '<div class="tile"><h1>' + val + '</h1></div>';
+    cell.innerHTML = '<h1>' + val + '</h1>';
     cell.dataset.row = r;
     cell.dataset.col = c;
     this.gridDiv.appendChild(cell);

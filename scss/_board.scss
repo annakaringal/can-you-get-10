@@ -2,7 +2,7 @@ $grid-width: 500px;
 $grid-spacing: 10px;
 $grid-row-cells: 5;
 
-$cell-size: $grid-width / $grid-row-cells;
+$cell-size: ($grid-width - ($grid-spacing * $grid-row-cells)) / $grid-row-cells;
 $tile-size: $cell-size - $grid-spacing;
 $cell-border-radius: 3px;
 
@@ -10,22 +10,16 @@ $cell-border-radius: 3px;
   font-family: $grid-font;
   width: $grid-width;
   height: $grid-width;
-  margin:0 auto;
+  margin: 0 auto;
 
   .cell {
-    width: $cell-size;
-    height: $cell-size;
-    float:left;
+    width: $tile-size;
+    height: $tile-size;
+    float: left;
     text-align: center;
-
-    .tile {
-      background-color: #ccc;
-      border-radius: $cell-border-radius;
-      display:block;
-      height:$tile-size;
-      width:$tile-size;
-      margin:0 auto;
-    }
+    margin: $grid-spacing;
+    background-color: #ccc;
+    border-radius: $cell-border-radius;
 
     h1 {
       position:relative; 
