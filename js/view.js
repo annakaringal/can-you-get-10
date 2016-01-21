@@ -18,3 +18,26 @@ View.prototype.renderCells = function(){
     this.gridDiv.appendChild(cell);
   }.bind(this));
 };
+
+View.prototype.getCellRowCol = function(el) {
+  var cell;
+  if (el.classList.contains('cell')){
+    cell = el;
+  } else if (el.parentElement.classList.contains('cell')) {
+    cell = el.parentElement;
+  } else {
+    return;
+  }
+  return {
+            r: parseInt(cell.dataset.row),
+            c: parseInt(cell.dataset.col), 
+            value: parseInt(cell.firstChild.innerHTML)
+          }
+};
+
+View.prototype.merge = function(){
+  var cell = this.getCellRowCol(event.target);
+  if (!cell) return;
+  
+
+};
