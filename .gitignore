@@ -24,7 +24,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
 ### Sass ###
 .sass-cache/
 *.css.map
+
+### JSPM ###
+jspm_packages
+node_modules
