@@ -27,17 +27,10 @@ describe("Game", function() {
 
   describe ('merging cells', function(){
     it ('returns whether or not the cell is mergeable', function(){
-      var cell = game.grid.cell(randomRow, randomCol);
-      var mergeable = false;
-      for (var dir=0; dir < 4; dir++){
-        var adjacent = game.adjacentCell(randomRow, randomCol, dir);
-        if (!adjacent) continue;
-        if (adjacent.value == cell){
-          mergeable = true;
-          break;
-        }
-      }
-      expect(game.canMerge(randomRow, randomCol)).toEqual(mergeable);
+      var mergeable = {row: 4, col: 4};
+      var unmergeable = {row: 0, col: 1};
+      expect(game.canMerge(mergeable.row, mergeable.col)).toBeTruthy();
+      expect(game.canMerge(unmergeable.row, unmergeable.col)).toBeFalsy();
     });
 
     it ("increments correct cell when merged", function(){
