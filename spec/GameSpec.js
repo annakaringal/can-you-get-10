@@ -9,7 +9,7 @@ describe("Game", function() {
 
   describe('construct a new game', function(){
     it ('should create a non-empty grid of random numbers', function(){
-      expect(game.grid).toBeNonEmpty(game.grid);
+      expect(game.grid).toBeNonEmpty();
     });
   });
 
@@ -56,19 +56,30 @@ describe("Game", function() {
 
     it ('returns the correct cells to be merged', function(){
       var mergedCells = game.merge(2,1);
+      var expected = [  { row: 2, col: 1},
+                        { row: 2, col: 0},
+                        { row: 3, col: 1},
+                        { row: 3, col: 2}   ];
+      expect(mergedCells.merged).toContainCells(expected);
       expect(mergedCells.merged.length).toEqual(4);
     });
 
     it ('returns the correct cells to be dropped', function(){
       var mergedCells = game.merge(1,2);
-      console.log(mergedCells.dropped);
+      var expected = [  { row: 0, col: 3},
+                        { row: 0, col: 4}   ];
+      expect(mergedCells.dropped).toContainCells(expected);
       expect(mergedCells.dropped.length).toEqual(2);
-
     });
 
     it ('returns the correct cells to be replaced from above', function(){
       var mergedCells = game.merge(1,2);
-      console.log(mergedCells.replaced);
+      var expectedMerge = [ { row: 0, col: 2},
+                            { row: 0, col: 3},
+                            { row: 0, col: 4},
+                            { row: 1, col: 2},
+                            { row: 1, col: 4}   ];
+      expect(mergedCells.merged).toContainCells(expectedMerge);
       expect(mergedCells.replaced.length).toEqual(5);
     });
   });
