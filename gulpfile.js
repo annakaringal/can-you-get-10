@@ -9,6 +9,13 @@ rename = require('gulp-rename'),
 notify = require('gulp-notify'),
 uglify = require('gulp-uglify');
 
+var jsConcatOrder = [
+  'src/js/grid.js', 
+  'src/js/game.js', 
+  'src/js/view.js', 
+  'src/js/app.js', 
+];
+
 gulp.task('styles', function(){
   return gulp.src('src/scss/*.scss')
     .pipe(sass())
@@ -20,7 +27,7 @@ gulp.task('styles', function(){
 });
 
 gulp.task('js', function(){
-  return gulp.src('src/js/*.js')
+  return gulp.src(jsConcatOrder)
     .pipe(concat('main.js'))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
