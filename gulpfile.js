@@ -1,13 +1,19 @@
 var gulp = require('gulp'), 
+// Styles
 sass = require('gulp-sass'), 
 minifycss = require('gulp-cssnano'),
+
+// Javascripts
 jasmine = require('gulp-jasmine'),
 jshint = require('gulp-jshint'),
-rev = require('gulp-rev'),
 concat = require('gulp-concat'),
+rev = require('gulp-rev'),
+
+// Gulp
+uglify = require('gulp-uglify'),
 rename = require('gulp-rename'),
 notify = require('gulp-notify'),
-uglify = require('gulp-uglify');
+livereload = require('gulp-livereload');
 
 var jsConcatOrder = [
   'src/js/grid.js', 
@@ -37,4 +43,13 @@ gulp.task('js', function(){
 
 gulp.task('default', function(){
   gulp.start('styles', 'js');
+});
+
+gulp.task('watch', function(){
+  gulp.watch('src/scss/*.scss', ['styles']);
+  gulp.watch('src/js/*.js', ['js']);
+
+  livereload.listen();
+  gulp.watch(['dist/**']).on('change', livereload.changed);
+
 });
