@@ -47,7 +47,29 @@ describe("Game", function() {
       game.merge(0,0);
       expect(game.grid.toString()).toEqual(state);
     });
+
+    it ('returns the correct target to merge into', function(){
+      var mergedCells = game.merge(2,1);
+      expect(mergedCells.target.r).toEqual(3);
+      expect(mergedCells.target.c).toEqual(1);
+    });
+
+    it ('returns the correct cells to be merged', function(){
+      var mergedCells = game.merge(2,1);
+      expect(mergedCells.merged.length).toEqual(4);
+    });
+
+    it ('returns the correct cells to be dropped', function(){
+      var mergedCells = game.merge(1,2);
+      console.log(mergedCells.dropped);
+      expect(mergedCells.dropped.length).toEqual(2);
+
+    });
+
+    it ('returns the correct cells to be replaced from above', function(){
+      var mergedCells = game.merge(1,2);
+      console.log(mergedCells.replaced);
+      expect(mergedCells.replaced.length).toEqual(5);
+    });
   });
-
-
 });
