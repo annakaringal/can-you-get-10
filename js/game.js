@@ -6,10 +6,10 @@ function Game(opts){
   var state = options.state;
 
   this.directions = {
-    0: {c: 0, r:  -1}, // up
-    1: {c: 1, r: 0}, // right
-    2: {c: 0, r: 1}, // down
-    3: {c: -1, r: 0}  // left
+    0: {col: 0, row:  -1}, // up
+    1: {col: 1, row: 0}, // right
+    2: {col: 0, row: 1}, // down
+    3: {col: -1, row: 0}  // left
   };
 
   this.setup(gridSize, state);
@@ -46,12 +46,12 @@ Game.prototype.directionVector = function(dir){
 // Returns value in adjacent cell 
 Game.prototype.adjacentCell = function(row, col, dir){
   var vec = this.directionVector(dir);
-  var newRow = row + vec.r;
-  var newCol = col + vec.c;
+  var newRow = row + vec.row;
+  var newCol = col + vec.col;
   if (!this.grid.outOfBounds(newRow, newCol)){
     return {
-      r: newRow, 
-      c: newCol, 
+      row: newRow, 
+      col: newCol, 
       value: this.grid.cell(newRow, newCol)
     };
   }
@@ -70,7 +70,7 @@ Game.prototype.canMerge = function(row, col){
 
 Game.prototype.cellInArray = function(cell, arr){
   for (var i=0; i<arr.length; i++){
-    if (cell.r === arr[i].r && cell.c === arr[i].c) return true;
+    if (cell.row === arr[i].row && cell.col === arr[i].col) return true;
   }
   return false;
 };
@@ -80,8 +80,8 @@ Game.prototype.cellInArray = function(cell, arr){
 Game.prototype.merge = function(row, col){
   if (!this.canMerge(row, col)) return;
   var selectedCell = {  
-                        r: row,
-                        c: col,
+                        row: row,
+                        col: col,
                         value: this.grid.cell(row,col)
                       };
 
@@ -102,12 +102,12 @@ Game.prototype.getMergeable = function(cell, mergeableCells){
   var mergeable = mergeableCells || { cells: [], target: cell };
 
   for(var dir=0; dir<4; dir++){
-    var adjacent = this.adjacentCell(cell.r, cell.c, dir);
+    var adjacent = this.adjacentCell(cell.row, cell.col, dir);
     if (!adjacent) continue;
     if (this.cellInArray(adjacent, mergeable.cells)) continue;
 
     if (mergeable.target.value === adjacent.value){
-      if (adjacent.c === mergeable.target.c && adjacent.r > mergeable.target.r){
+      if (adjacent.col === mergeable.target.col && adjacent.row > mergeable.target.row){
         mergeable.target = adjacent;
       } 
       mergeable.cells.push(adjacent);
@@ -120,12 +120,12 @@ Game.prototype.getMergeable = function(cell, mergeableCells){
 Game.prototype.incrementTarget = function(target){
   var newVal = target.value + 1;
   if (newVal > this.highestNumber) this.highestNumber = newVal;
-  this.grid.setCell(target.r, target.c, newVal);
+  this.grid.setCell(target.row, target.col, newVal);
 };
 
 Game.prototype.isTarget = function(cell, target){
   if (!cell || !target) return;
-  return cell.c === target.c && cell.r === target.r;
+  return cell.col === target.col && cell.row=== target.row;
 };
 
 // Drop any cells above mergeable cells and replace with random number
@@ -135,23 +135,23 @@ Game.prototype.replaceMergeable = function(mergeable, target){
   var game = this;
 
   this.grid.eachCell(function(r,c,v){
-    var cell = {c: c, r: r, value: v};
+    var cell = {row: r, col: c, value: v};
     if (this.cellInArray(cell, mergeable) && !this.isTarget(cell, target)){
-      var above = {c: c, r: r-1, value: this.grid.cell(r-1, c)};
+      var above = {row: r-1, col: c, value: this.grid.cell(r-1, c)};
       if (above.value && above.value !== -1){
-        this.grid.setCell(cell.r, cell.c, above.value);
-        this.grid.setCell(above.r, above.c, -1);
+        this.grid.setCell(cell.row, cell.col, above.value);
+        this.grid.setCell(above.row, above.col, -1);
         emptyCells.push(above);
         dropped.push(above);
       } else{
-        this.grid.setCell(cell.r, cell.c, -1);
+        this.grid.setCell(cell.row, cell.col, -1);
         emptyCells.push(cell);
       }
     }
   }.bind(this));
 
   emptyCells.forEach(function(cell){
-    this.grid.replaceWithRandom(cell.r, cell.c, this.highestNumber);
+    this.grid.replaceWithRandom(cell.row, cell.col, this.highestNumber);
   }.bind(this));
 
   return {

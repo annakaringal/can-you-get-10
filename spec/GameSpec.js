@@ -19,8 +19,8 @@ describe("Game", function() {
       var randomCol = Math.floor(Math.random()*(gridSize-1));
       var up = 0;
       var cellAbove = game.grid.cell(randomRow-1, randomCol);
-      expect(game.adjacentCell(randomRow, randomCol, up).c).toEqual(randomCol);
-      expect(game.adjacentCell(randomRow, randomCol, up).r).toEqual(randomRow-1);
+      expect(game.adjacentCell(randomRow, randomCol, up).col).toEqual(randomCol);
+      expect(game.adjacentCell(randomRow, randomCol, up).row).toEqual(randomRow-1);
       expect(game.adjacentCell(randomRow, randomCol, up).value).toEqual(cellAbove);
     });
   });
@@ -50,8 +50,8 @@ describe("Game", function() {
 
     it ('returns the correct target to merge into', function(){
       var mergedCells = game.merge(2,1);
-      expect(mergedCells.target.r).toEqual(3);
-      expect(mergedCells.target.c).toEqual(1);
+      expect(mergedCells.target.row).toEqual(3);
+      expect(mergedCells.target.col).toEqual(1);
     });
 
     it ('returns the correct cells to be merged', function(){
