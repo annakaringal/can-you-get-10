@@ -1,5 +1,13 @@
 {
   "jspm": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/annakaringal/can-you-get-10.git"
+  },
+  "name": "can-you-get-10",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
