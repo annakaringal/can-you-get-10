@@ -19,6 +19,16 @@ gulp.task('styles', function(){
     .pipe(notify({ message: 'Sass compiled and minified'}));
 });
 
+gulp.task('js', function(){
+  return gulp.src('js/*.js')
+    .pipe(concat('main.js'))
+    .pipe(gulp.dest('js/'))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(uglify())
+    .pipe(gulp.dest('js/'))
+    .pipe(notify({  message: 'JS linted & minified' }));
+});
+
 gulp.task('default', function(){
   gulp.start('styles', 'js');
 });
