@@ -45,7 +45,7 @@ describe("Grid", function() {
         }
       });
 
-      expect(lessThanOne).toBeFalsy;
+      expect(lessThanOne).toBeFalsy();
       expect(actualHighest).not.toBeGreaterThan(highestNumber);
     });
   });

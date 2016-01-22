@@ -5,7 +5,7 @@ beforeEach(function () {
       if (cell.row === arr[i].row && cell.col === arr[i].col) return true;
     }
     return false;
-  };
+  }
 
   jasmine.addMatchers({
     toBeNonEmpty: function () {

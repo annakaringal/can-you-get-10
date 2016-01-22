@@ -157,6 +157,6 @@ Game.prototype.replaceMergeable = function(mergeable, target){
   return {
             dropped: dropped, 
             fromAbove: emptyCells
-          }
+          };
 };
 
