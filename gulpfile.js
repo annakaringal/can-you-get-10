@@ -10,22 +10,21 @@ notify = require('gulp-notify'),
 uglify = require('gulp-uglify');
 
 gulp.task('styles', function(){
-  return gulp.src('scss/*.scss')
+  return gulp.src('src/scss/*.scss')
     .pipe(sass())
-    .pipe(gulp.dest('css/'))
+    .pipe(gulp.dest('src/css/'))
     .pipe(rename({suffix: '.min'}))
     .pipe(minifycss())
-    .pipe(gulp.dest('css/'))
+    .pipe(gulp.dest('dist/css/'))
     .pipe(notify({ message: 'Sass compiled and minified'}));
 });
 
 gulp.task('js', function(){
-  return gulp.src('js/*.js')
+  return gulp.src('src/js/*.js')
     .pipe(concat('main.js'))
-    .pipe(gulp.dest('js/'))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
-    .pipe(gulp.dest('js/'))
+    .pipe(gulp.dest('dist/js/'))
     .pipe(notify({  message: 'JS linted & minified' }));
 });
 
