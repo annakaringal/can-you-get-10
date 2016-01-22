@@ -31,3 +31,7 @@ Temporary Items
 ### JSPM ###
 jspm_packages
 node_modules
+
+### MINIFIED FILES ###
+# I hate commit these
+dist/*/*.min.*
