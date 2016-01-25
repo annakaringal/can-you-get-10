@@ -79,7 +79,7 @@ describe("Game", function() {
                             { row: 0, col: 4},
                             { row: 1, col: 2},
                             { row: 1, col: 4}   ];
-      expect(mergedCells.merged).toContainCells(expectedMerge);
+      expect(mergedCells.replaced).toContainCells(expectedMerge);
       expect(mergedCells.replaced.length).toEqual(5);
     });
   });
