@@ -30,19 +30,24 @@ beforeEach(function () {
         compare: function (actual, expected) {
           var cellArray = actual;
           var cellDiff = false;
+          var message = '';
 
           if (cellArray.length != expected.length){
             cellDiff = true;
+            message = "Array lengths don't match";
           } else {
             cellArray.forEach(function(cell){
               if (cellInArray(cell, expected) < 0) {
+                message = "Cell (" + cell.row + ", " + cell.col + ") is different";
                 cellDiff = false;
+                return;
               } 
             });            
           }
 
           return {
-            pass: !cellDiff
+            pass: !cellDiff,
+            message: message
           };
         }
       };
