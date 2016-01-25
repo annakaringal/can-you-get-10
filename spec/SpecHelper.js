@@ -2,9 +2,9 @@ beforeEach(function () {
 
   function cellInArray (cell, arr){
     for (var i=0; i<arr.length; i++){
-      if (cell.row === arr[i].row && cell.col === arr[i].col) return true;
+      if (cell.row === arr[i].row && cell.col === arr[i].col) return i;
     }
-    return false;
+    return -1;
   }
 
   jasmine.addMatchers({
@@ -35,7 +35,7 @@ beforeEach(function () {
             cellDiff = true;
           } else {
             cellArray.forEach(function(cell){
-              if (!cellInArray(cell, expected)) {
+              if (cellInArray(cell, expected) < 0) {
                 cellDiff = false;
               } 
             });            

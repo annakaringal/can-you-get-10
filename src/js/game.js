@@ -65,14 +65,14 @@ Game.prototype.canMerge = function(row, col){
     if (!adjacent) continue;
     if (cell === adjacent.value) return true;
   }
-  return false;
+  return false; 
 };
 
 Game.prototype.cellInArray = function(cell, arr){
   for (var i=0; i<arr.length; i++){
-    if (cell.row === arr[i].row && cell.col === arr[i].col) return true;
+    if (cell.row === arr[i].row && cell.col === arr[i].col) return i;
   }
-  return false;
+  return -1;
 };
 
 // Merge given cell with any adjacent cells with the same value
@@ -104,7 +104,7 @@ Game.prototype.getMergeable = function(cell, mergeableCells){
   for(var dir=0; dir<4; dir++){
     var adjacent = this.adjacentCell(cell.row, cell.col, dir);
     if (!adjacent) continue;
-    if (this.cellInArray(adjacent, mergeable.cells)) continue;
+    if (this.cellInArray(adjacent, mergeable.cells) >= 0) continue;
 
     if (mergeable.target.value === adjacent.value){
       if (adjacent.col === mergeable.target.col && adjacent.row > mergeable.target.row){
