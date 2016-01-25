@@ -141,33 +141,38 @@ Game.prototype.isTarget = function(cell, target){
 
 // Drop any cells above mergeable cells and replace with random number
 Game.prototype.replaceMergeable = function(mergeable, target){
-  var emptyCells = [];
-  var dropped = [];
-  var game = this;
+  var replacedCells = [];
+  var droppedCells = [];
 
-  this.grid.eachCell(function(r,c,v){
-    var cell = {row: r, col: c, value: v};
-    if (this.cellInArray(cell, mergeable) && !this.isTarget(cell, target)){
-      var above = {row: r-1, col: c, value: this.grid.cell(r-1, c)};
-      if (above.value && above.value !== -1){
-        this.grid.setCell(cell.row, cell.col, above.value);
-        this.grid.setCell(above.row, above.col, -1);
-        emptyCells.push(above);
-        dropped.push(above);
-      } else{
-        this.grid.setCell(cell.row, cell.col, -1);
-        emptyCells.push(cell);
+  var sorted = this.sortCells(mergeable);
+  sorted.forEach(function(cell){
+    var above = { row: cell.row-1, 
+                  col: cell.col, 
+                };
+    above.value = this.grid.cell(above.row, above.col);
+
+    if (!above.value || this.grid.isEmpty(above.row, above.col)){
+      this.grid.setEmpty(cell.row, cell.col);
+      replacedCells.push(cell);
+    } else {
+      this.grid.setCell(cell.row, cell.col, above.value)
+      this.grid.setEmpty(above.row, above.col);
+      replacedCells.push(above);
+
+      var i = this.cellInArray({row: above.row-1, col: above.col}, droppedCells);
+      if (i >= 0){
+        droppedCells[i].drop += 1;
+      } else {
+        above.drop = 1;
+        droppedCells.push(above);
       }
     }
-  }.bind(this));
 
-  emptyCells.forEach(function(cell){
-    this.grid.replaceWithRandom(cell.row, cell.col, this.highestNumber);
   }.bind(this));
 
   return {
-            dropped: dropped, 
-            fromAbove: emptyCells
+            dropped: droppedCells, 
+            fromAbove: replacedCells
           };
 };
 
