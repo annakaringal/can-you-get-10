@@ -75,6 +75,17 @@ Game.prototype.cellInArray = function(cell, arr){
   return -1;
 };
 
+Game.prototype.sortCells = function(arr){
+  function sortByRowCol(a,b){
+    if(a.row == b.row) {
+      return (a.col < b.col) ? -1 : (a.col > b.col) ? 1 : 0;
+    } else {
+      return (a.row < b.row) ? -1 : 1;
+    }
+  }
+
+  return arr.sort(sortByRowCol);
+};
 // Merge given cell with any adjacent cells with the same value
 // and increment the value of the new merged cell
 Game.prototype.merge = function(row, col){
