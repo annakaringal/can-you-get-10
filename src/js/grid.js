@@ -1,6 +1,7 @@
 function Grid(opts){
   var options = opts || {};
   var highestNumber = options.highestNumber || 4;
+  this.emptyValue = -1;
   this.size = options.size || 5;
   this.cells = options.state ? this.fromState(options.state) : this.random(highestNumber);
 }
@@ -64,6 +65,17 @@ Grid.prototype.replaceWithRandom = function(row, col, lim){
 Grid.prototype.setCell = function(row, col, val){
   if (val < 1 || this.outOfBounds(row, col)) return;
   this.cells[row][col] = val;
+};
+
+// Set cell to empty value
+Grid.prototype.setEmpty = function(row, col){
+  if (this.outOfBounds(row, col)) return;
+  this.cells[row][col] = this.emptyValue;
+};
+
+// Checks if cell is empty
+Grid.prototype.isEmpty = function (row, col) {
+  return this.cells[row][col] === this.emptyValue;
 };
 
 // Checks to see if row & col are valid cells in grid
