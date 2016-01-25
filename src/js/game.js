@@ -146,6 +146,7 @@ Game.prototype.replaceMergeable = function(mergeable, target){
 
   var sorted = this.sortCells(mergeable);
   sorted.forEach(function(cell){
+    if (this.isTarget(cell, target)) return;
     var above = { row: cell.row-1, 
                   col: cell.col, 
                 };
